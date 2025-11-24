@@ -31,7 +31,7 @@ jobs:
       matrix:
 
         env: [dev, test, prod]
-	python-version: [3.10, 3.11]
+	python-version: [3.10, 3.11.5]
 
 
 
