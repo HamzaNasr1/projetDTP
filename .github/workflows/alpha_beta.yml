@@ -1,0 +1,25 @@
+name: Alpha or Beta
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Choisir la version'
+        required: true
+        default: 'alpha'
+        type: choice
+        options:
+          - alpha
+          - beta
+
+jobs:
+  display-version:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Afficher la version choisie
+        run: |
+          if [ "${{ github.event.inputs.version }}" = "alpha" ]; then
+            echo "Version: alpha"
+          else
+            echo "Version: beta"
+          fi
