@@ -2,27 +2,27 @@ name: CSV Pipeline
 
 on:
   push:
-    branches:
-      - main
+    branches: [main]
   workflow_dispatch:
-    inputs:
-      env:
-        description: "Sélectionner l’environnement"
-        required: true
-        default: "dev"
 
 jobs:
   csv_pipeline:
     runs-on: ubuntu-latest
 
     strategy:
+      fail-fast: false
       matrix:
-        env: [dev, test, prod]
-        python-version: [3.11]
+        env: ["dev", "test", "prod"]
+        python-version: ["3.11"]
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
+
+      - name: DEBUG — Show repository tree
+        run: |
+          pwd
+          ls -R .
 
       - name: Set up Python
         uses: actions/setup-python@v4
@@ -37,9 +37,9 @@ jobs:
       - name: Run Python script for ${{ matrix.env }}
         run: |
           if [ "${{ matrix.env }}" = "dev" ]; then
-            python scripts/csv_to_dev.py
+            python Scripts/csv_to_dev.py
           elif [ "${{ matrix.env }}" = "test" ]; then
-            python scripts/csv_to_test.py
-          elif [ "${{ matrix.env }}" = "prod" ]; then
-            python scripts/csv_to_prod.py
+            python Scripts/csv_to_test.py
+          else
+            python Scripts/csv_to_prod.py
           fi
