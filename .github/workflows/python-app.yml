@@ -37,4 +37,6 @@ jobs:
     - name: scraping
       run: |
         set -e 
+        python -m pip install --upgrade pip
+        pip install requests beautifulsoup4
         python ./Scripts/scraping.py
